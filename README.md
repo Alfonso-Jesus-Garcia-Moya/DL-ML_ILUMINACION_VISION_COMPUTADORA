@@ -88,4 +88,85 @@ El archivo `Semana_10_Con tarea.ipynb` incluye las siguientes demostraciones pr�
 
 PARTE 3 DE 3
 
-🧠 Clasificación Avanzada de Imágenes con Deep Learning (Stanford Dogs Dataset)Este repositorio contiene la implementación y el análisis comparativo de modelos de Deep Learning (DL) para la tarea de clasificación de grano fino (Fine-Grained Classification) utilizando el desafiante Stanford Dogs Dataset (120 razas de perros).El objetivo principal es evaluar y comparar el rendimiento y la eficiencia de diferentes arquitecturas neuronales (MLP, LSTM, CNN) y la técnica de Transferencia de Conocimiento (Transfer Learning) en un contexto de alta complejidad visual.🛠️ Estructura del Pipeline de EntrenamientoEl código sigue un protocolo de experimentación riguroso, optimizado para la reproducibilidad y el rendimiento en un entorno como Google Colab (utilizando TensorFlow y Keras).1. Preparación y Optimización del DatasetReproducibilidad: Uso de una semilla fija (SEED = 42) para garantizar la consistencia en la inicialización de pesos y la división de los datos.Pipeline de Datos (tf.data): Implementación de técnicas avanzadas como caching, prefetching y shuffling para maximizar el rendimiento de la GPU/CPU durante el entrenamiento.Normalización: Escalado de las imágenes a un rango de [0, 1].Adaptación de Tensors: Funciones específicas para reestructurar las imágenes para cada arquitectura:MLP: Imagen aplanada a vector 1D.LSTM: Imagen transformada a una secuencia de filas (Tiempo x Características).CNN/TL: Mantenimiento de la forma espacial (H x W x C).2. Control del Aprendizaje (Callbacks)Se utilizan callbacks para gestionar el proceso de entrenamiento de forma automática y robusta:EarlyStopping: Detiene el entrenamiento al detectar sobreajuste (monitoreando la pérdida de validación).ReduceLROnPlateau: Ajusta dinámicamente la tasa de aprendizaje para mejorar la convergencia en etapas finales.ModelCheckpoint: Guarda la versión del modelo que alcanza el mejor desempeño en el conjunto de validación.3. Arquitecturas y Comparativa de RendimientoEl corazón del proyecto es la comparación de cuatro enfoques distintos:ModeloTipo de EstructuraFunción en el AnálisisMLP (Línea Base)Vectorial (Densas)Evalúa el desempeño sin estructura espacial.LSTM BidireccionalSecuencial/TemporalEvalúa la imagen como una secuencia de filas.CNN BaselineEspacial (Convolucional)Estándar para CV; extrae jerarquías de características locales.Transfer Learning (MobileNetV2)Preentrenado + Fine-TuningReutiliza conocimiento de ImageNet para lograr la máxima precisión y rápida convergencia.4. Evaluación ProfundaEl código incluye un conjunto de funciones de evaluación avanzadas para una visión integral del rendimiento:plot_history: Visualización de curvas de Pérdida (Loss) y Precisión (Accuracy) en entrenamiento y validación.eval_and_report: Generación del Reporte de Clasificación (Precisión, Recall, F1-Score por clase) y la Matriz de Confusión (heatmap).show_sample_predictions: Muestras visuales de las predicciones (aciertos ✅ / errores ❌) para un análisis cualitativo.🚀 Tecnologías ClavePython 3.xTensorFlow / Keras (Core DL framework)tf.data (Optimización de pipelines de datos)numpymatplotlib y seaborn (Visualización de resultados)scikit-learn (Generación de Reportes y Matriz de Confusión)
+# 🐶 Clasificación Avanzada de Imágenes con Deep Learning (Stanford Dogs Dataset)
+
+
+
+[Image of a deep learning model architecture for image classification]
+
+
+Este repositorio aborda la desafiante tarea de la **Clasificación de Grano Fino (Fine-Grained Classification)** utilizando el **Stanford Dogs Dataset** (120 razas de perros). El objetivo principal es la implementación, el entrenamiento y el **análisis comparativo** de distintas arquitecturas de Deep Learning (DL) y la técnica de Transferencia de Conocimiento.
+
+---
+
+## 💡 Objetivos y Enfoque
+
+El proyecto busca evaluar y contrastar el **rendimiento** y la **eficiencia** de diversos modelos neuronales en un contexto de alta complejidad visual, donde las diferencias entre las clases (razas) son sutiles.
+
+### Arquitecturas a Evaluar
+
+1.  **MLP (Línea Base):** Para establecer el rendimiento sin estructura espacial.
+2.  **LSTM Bidireccional:** Evalúa la imagen como una secuencia de datos.
+3.  **CNN Baseline:** El estándar para Computer Vision, extrayendo jerarquías de características locales.
+4.  **Transfer Learning (MobileNetV2):** Reutilización de conocimiento preentrenado en ImageNet para máxima precisión y rápida convergencia.
+
+---
+
+## 🛠️ Estructura del Pipeline de Entrenamiento
+
+El código sigue un protocolo de experimentación riguroso, optimizado para la **reproducibilidad** y el rendimiento, utilizando TensorFlow y Keras.
+
+### 1. Preparación y Optimización del Dataset
+
+* **Reproducibilidad:** Se utiliza una semilla fija (`SEED = 42`) para garantizar la consistencia en la división de datos y la inicialización de pesos.
+* **Pipeline de Datos (`tf.data`):** Implementación de técnicas avanzadas como **caching**, **prefetching** y **shuffling** para maximizar el rendimiento de la GPU/CPU durante el entrenamiento.
+* **Normalización:** Escalado de las imágenes al rango $[0, 1]$.
+* **Adaptación de Tensors:** Funciones específicas para reestructurar la entrada según la arquitectura:
+    * **MLP:** Imagen aplanada a vector 1D.
+    * **LSTM:** Imagen transformada a una secuencia de filas (`Tiempo x Características`).
+    * **CNN/TL:** Mantenimiento de la forma espacial (`H x W x C`).
+
+### 2. Control del Aprendizaje (Callbacks)
+
+Se emplean Callbacks para gestionar el proceso de entrenamiento de forma automática y robusta:
+
+* `EarlyStopping`: Detiene el entrenamiento al detectar **sobreajuste** (monitoreando la pérdida de validación).
+* `ReduceLROnPlateau`: Ajusta dinámicamente la **tasa de aprendizaje** para mejorar la convergencia en etapas finales.
+* `ModelCheckpoint`: Guarda la versión del modelo que alcanza el **mejor desempeño** en el conjunto de validación.
+
+### 3. Comparativa de Arquitecturas
+
+El corazón del proyecto es la comparación de los cuatro enfoques:
+
+| Modelo | Tipo de Estructura | Función en el Análisis |
+| :--- | :--- | :--- |
+| **MLP (Línea Base)** | Vectorial (Densas) | Evalúa el desempeño sin estructura espacial. |
+| **LSTM Bidireccional** | Secuencial/Temporal | Evalúa la imagen como una secuencia de filas. |
+| **CNN Baseline** | Espacial (Convolucional) | Estándar para CV; extrae jerarquías de características locales. |
+| **Transfer Learning** | Preentrenado + Fine-Tuning | Máxima precisión y rápida convergencia. |
+
+---
+
+## 📊 Evaluación Profunda
+
+El código incluye un conjunto de funciones de evaluación avanzadas para una visión integral del rendimiento del modelo:
+
+* `plot_history`: Visualización de curvas de **Pérdida (Loss)** y **Precisión (Accuracy)** en entrenamiento y validación.
+* `eval_and_report`: Generación del **Reporte de Clasificación** (Precisión, Recall, F1-Score por clase) y la **Matriz de Confusión** (`heatmap`).
+* `show_sample_predictions`: Muestras visuales de las predicciones (**aciertos ✅ / errores ❌**) para un análisis cualitativo.
+
+
+
+[Image of a confusion matrix heatmap]
+
+
+---
+
+## 🚀 Tecnologías Clave
+
+* **Python 3.x**
+* **TensorFlow / Keras** (Core DL framework)
+* **tf.data** (Optimización de pipelines de datos)
+* **numpy**
+* **matplotlib** y **seaborn** (Visualización de resultados)
+* **scikit-learn** (Generación de Reportes y Matriz de Confusión)
